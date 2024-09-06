@@ -2,12 +2,11 @@ services:
   mysqldb:
     image: mysql:8
     restart: unless-stopped
-    env_file: ./.env
     environment:
-      - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
-      - MYSQL_DATABASE=$DB_NAME
+      - MYSQL_ROOT_PASSWORD=example123
+      - MYSQL_DATABASE=db_jwt
     ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+      - 3306:3306
     volumes:
       - db:/var/lib/mysql
   app:
@@ -15,15 +14,15 @@ services:
       - mysqldb
     build: ./
     restart: unless-stopped
-    env_file: ./.env
     ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+      - 3001:3000
     environment:
       - DB_HOST=mysqldb
-      - DB_USER=$DB_USER
-      - DB_PASSWORD=$DB_PASSWORD
-      - DB_NAME=$DB_NAME
-      - DB_PORT=$DB_PORT
+      - DB_USER=root
+      - DB_PASSWORD=example123
+      - DB_NAME=db_jwt
+      - DB_PORT=3306
+      - JWT_SECRET=eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcyNTYzNTE5MSwiaWF0IjoxNzI1NjM1MTkxfQ.tsMdIhEAZ3dBmpAkYtWQosM4RXQ3J8AADH45UheFFtQ
     stdin_open: true
     tty: true
 
