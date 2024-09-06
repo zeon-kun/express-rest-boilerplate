@@ -21,5 +21,9 @@ EXPOSE 3000
 
 # Set environment variables
 
+# Setup Database
+RUN npx sequelize-cli db:create
+RUN npx sequelize-cli db:migrate
+
 # Run the app
 CMD [ "npm", "start" ]
