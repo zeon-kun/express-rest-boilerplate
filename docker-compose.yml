@@ -9,6 +9,9 @@ services:
       - 3306:3306
     volumes:
       - db:/var/lib/mysql
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
   app:
     depends_on:
       - mysqldb
@@ -25,6 +28,8 @@ services:
       - JWT_SECRET=eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcyNTYzNTE5MSwiaWF0IjoxNzI1NjM1MTkxfQ.tsMdIhEAZ3dBmpAkYtWQosM4RXQ3J8AADH45UheFFtQ
     stdin_open: true
     tty: true
+    extra_hosts:
+    - "api.jwt.zeonkun.tech:195.35.6.208"
 
 volumes: 
   db:
