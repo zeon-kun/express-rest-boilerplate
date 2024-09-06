@@ -1,37 +1,29 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const mongoose = require("mongoose");
-
-require("dotenv/config"); // Environment variables
-
-// Route imports
-const homeRoutes = require("./routes/home");
-const authRoutes = require("./routes/auth");
-const privateRoutes = require("./routes/privateRoutes");
-const paginationExample = require("./routes/examples/paginationExample");
 const limiter = require("./middlewares/rateLimiter");
+require("dotenv/config"); // Load environment variables
 
-// Constants
-const EXAMPLES_ROUTE = "/api/examples";
+// Importing routes
+const authRoutes = require("./routes/auth");
+
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(limiter);
-// -> Route Middlewares
-app.use("/", homeRoutes);
-app.use("/api/private", privateRoutes);
+
+// Route Middlewares
 app.use("/api/user", authRoutes);
-// -> Example Routes
-app.use(`${EXAMPLES_ROUTE}/pagination`, paginationExample);
 
-// Connect to Database
-mongoose.connect(process.env.DB_URL, () => {
-  console.log("Connected to Database");
-});
+// Import Sequelize instance from db.js
+const { sequelize, connectDB, syncModels } = require("./db");
 
-// Starting the server
+// Connect to Database and Sync Models
+connectDB();
+syncModels();
+
+// Start the server
 app.listen(process.env.PORT, () => {
   console.log(`Application running at http://localhost:${process.env.PORT}/`);
 });
