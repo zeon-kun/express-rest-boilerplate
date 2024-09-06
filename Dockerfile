@@ -19,8 +19,5 @@ RUN npm install -g nodemon
 # Expose the port the app runs on
 EXPOSE 3000
 
-RUN npx sequelize-cli db:create
-RUN npx sequelize-cli db:migrate
-
 # Run the app
 CMD [ "npm", "start" ]
