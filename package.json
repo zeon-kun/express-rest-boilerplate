@@ -4,7 +4,7 @@
   "description": "An express REST API boilerplate with JWT authentication",
   "main": "app.js",
   "scripts": {
-    "db:migrate": "npx sequelize-cli db:migraate",
+    "db:migrate": "npx sequelize-cli db:migrate",
     "db:create": "npx sequelize-cli db:create",
     "db:down": "npx sequelize-cli db:drop",
     "start": "node app.js",
