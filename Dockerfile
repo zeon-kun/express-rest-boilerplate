@@ -7,6 +7,9 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
+# Install netcat for the `nc` command
+RUN apt-get update && apt-get install -y netcat
+
 # Install app dependencies
 RUN npm install
 
