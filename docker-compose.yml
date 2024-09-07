@@ -1,7 +1,7 @@
 services:
   mysqldb:
     image: mysql:8
-    restart: unless-stopped
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=example123
       - MYSQL_DATABASE=db_jwt
@@ -19,7 +19,7 @@ services:
     depends_on:
       - mysqldb
     build: ./
-    restart: unless-stopped
+    restart: always
     ports:
       - 3002:3002
     environment:
@@ -36,8 +36,7 @@ services:
     networks:
       - jwtnetwork
     command: >
-      sh -c "while ! nc -z mysqldb 3306; do sleep 1; done;
-             npm run db:create && npm run db:migrate && npm start"
+      "npm start"
 
 volumes: 
   db:
