@@ -9,7 +9,10 @@ const authRoutes = require("./routes/auth");
 
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: process.env.APP_URL,
+  methods: ['GET', 'POST'],
+}));
 app.use(express.json());
 app.use(limiter);
 
