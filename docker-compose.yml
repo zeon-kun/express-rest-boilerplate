@@ -9,9 +9,12 @@ services:
       - 3306:3306
     volumes:
       - db:/var/lib/mysql
+    networks:
+      - jwtnetwork
     dns:
       - 8.8.8.8
       - 8.8.4.4
+
   app:
     depends_on:
       - mysqldb
@@ -29,7 +32,15 @@ services:
     stdin_open: true
     tty: true
     extra_hosts:
-    - "api.jwt.zeonkun.tech:195.35.6.208"
+      - "api.jwt.zeonkun.tech:195.35.6.208"
+    networks:
+      - jwtnetwork
+    command: >
+      sh -c "while ! nc -z mysqldb 3306; do sleep 1; done;
+             npm run db:create && npm run db:migrate && npm start"
 
 volumes: 
   db:
+
+networks:
+  jwtnetwork:
