@@ -37,7 +37,7 @@ services:
     networks:
       - jwtnetwork
     command: >
-      ssh -c "npm run db:create && npm run db:migrate && npm start"
+      sh -c "npm run db:create && npm run db:migrate && npm start"
 
 volumes: 
   db:
